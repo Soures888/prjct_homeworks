@@ -3,14 +3,14 @@
 # Встановлення
 
 1. `docker-compose up -d --build` - Запуск контейнерів
-2. Виповніть curl запит для генерації тестових даних для MySQL та ES
+2. Виповніть curl запит для генерації тестових даних для MongoDB та ES
 ```
 curl -X 'GET' \
 'http://localhost/fastapi/generate_data' \
 -H 'accept: application/json'
 ```
 3. Запустити тести на нагрузку `make run`. \
-Спочатку будуть запущені тести на MySQL в 5/20/50, потім на ES
+Спочатку будуть запущені тести на MongoDB в 5/20/50, потім на ES
 
 # Тести
 
@@ -26,6 +26,8 @@ FatAPI конфігурація:
 
 ![Full Results](https://i.imgur.com/htTgSeL.jpg)
 
+### [Більше скриншотів](https://imgur.com/a/fag1QjU)
+
 Тобто, як ми бачимо з результатів, при повному навантаженні всіх воркерів нагрузка зростає до ~90 відсодків \
 Але при цьому, якщо збільшувати кількість потоків, то навантаження зростає не так сильно, та Transaction Rate теж \
 Тому середній час відповіді стає вище
@@ -33,7 +35,7 @@ FatAPI конфігурація:
 Результати статистики по запитам:
 
 ```
-MySql Concurrency 5:
+Mongo Concurrency 5:
 Lifting the server siege...
 Transactions:                  10195 hits
 Availability:                 100.00 %
@@ -48,7 +50,7 @@ Failed transactions:               0
 Longest transaction:            0.12
 Shortest transaction:           0.03
  
-MySql Concurrency 20:
+Mongo Concurrency 20:
 Transactions:                  11402 hits
 Availability:                 100.00 %
 Elapsed time:                  90.94 secs
@@ -62,7 +64,7 @@ Failed transactions:               0
 Longest transaction:            0.69
 Shortest transaction:           0.03
  
-MySql Concurrency 50:
+Mongo Concurrency 50:
 Transactions:                  11689 hits
 Availability:                 100.00 %
 Elapsed time:                  90.93 secs
@@ -120,6 +122,7 @@ Longest transaction:            5.57
 Shortest transaction:           0.18
 
 ```
+
 
 
 

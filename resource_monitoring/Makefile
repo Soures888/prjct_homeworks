@@ -2,9 +2,9 @@
 .PHONY: test
 
 # concurrency levels
-CONCURRENCY = 5 20 50
+CONCURRENCY = 1 5 20
 # endpoints
-ENDPOINTS = mysqlread esread
+ENDPOINTS = mongoread esread
 
 # run siege test with different concurrency levels and endpoints
 test:

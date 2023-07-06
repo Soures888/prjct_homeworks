@@ -2,14 +2,17 @@ version: '3.8'
 services:
   fastapi:
     build:
-      context: .
+      context: python
       dockerfile: Dockerfile
     volumes:
       - ./python:/app
     expose:
       - 8000
+    depends_on:
+      - mongo
+      - elasticsearch
     links:
-      - mysql
+      - mongo
       - elasticsearch
     env_file:
       - configuration.env
@@ -24,10 +27,12 @@ services:
       - fastapi
 
   telegraf:
-    image: arm64v8/telegraf:latest
+    build:
+      context: telegraf
+      dockerfile: Dockerfile
     volumes:
     - ./telegraf/etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-#    - /var/run/docker.sock:/var/run/docker.sock
+    - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - influxdb
     expose:
@@ -36,7 +41,8 @@ services:
       - 8094
     links:
       - influxdb
-      - mysql
+      - elasticsearch
+      - mongo
 
   influxdb:
     image: arm64v8/influxdb:1.8.10
@@ -58,16 +64,15 @@ services:
       - 3000
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
 
-  mysql:
-    image: mysql:latest
-    restart: always
+  mongo:
+    image: mongo:latest
     env_file:
       - configuration.env
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mongodb_data:/data/db
+    expose:
+      - 27017
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
@@ -82,5 +87,5 @@ services:
 volumes:
   grafana_data: {}
   influxdb_data: {}
-  mysql_data: {}
+  mongodb_data: {}
   esdata: {}
