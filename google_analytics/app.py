@@ -37,6 +37,7 @@ def push_data(bitcoin_price: float):
         params=request_params,
         json=payload
     )
+    print(request_params, payload)
     print('Sending request...')
     print(response.status_code, response.text)
 
