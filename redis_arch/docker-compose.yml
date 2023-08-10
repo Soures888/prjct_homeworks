@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  redis_master:
+    image: redis:latest
+    container_name: redis_master
+    ports:
+      - "6378:6379"
+    volumes:
+        - ./redis.conf:/usr/local/etc/redis/redis_master.conf
+    command: >
+        redis-server /usr/local/etc/redis/redis_master.conf
+  redis_slave:
+    image: redis:latest
+    container_name: redis_slave
+    command: redis-server --slaveof redis_master 6379
+    depends_on:
+      - redis_master
+  redis_slave2:
+    image: redis:latest
+    container_name: redis_slave2
+    command: redis-server --slaveof redis_master 6379
+    depends_on:
+      - redis_master
+  sentinel:
+    container_name: sentinel
+    build:
+      context: ./sentinel
+    depends_on:
+      - redis_master
+      - redis_slave
+    links:
+      - redis_master
+      - redis_slave
+      - redis_slave2
+  python_script:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SENTINEL_ADDRESS: sentinel
+      SENTINEL_MASTER_NAME: mymaster
+    volumes:
+      - ./python_script:/app
+    depends_on:
+        - sentinel
+
