@@ -5,3 +5,5 @@
 3. [Stress Testing](https://github.com/Soures888/prjct_homeworks/tree/main/stress_testing)
 4. [Instagram Architecture](https://github.com/Soures888/prjct_homeworks/tree/main/instagram_architecture)
 5. [Webserver](https://github.com/Soures888/prjct_homeworks/tree/main/webserver)
+6. [Redis Arch](https://github.com/Soures888/prjct_homeworks/tree/main/redis_arch)
+7. [Queue Comparison](https://github.com/Soures888/prjct_homeworks/tree/main/queue)

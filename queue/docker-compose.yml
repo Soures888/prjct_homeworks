@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis_aof:
+    image: redis:latest
+    container_name: redis_aof
+    ports:
+      - "6377:6379"
+    volumes:
+      - ./configurations/redis_aof.conf:/usr/local/etc/redis/redis.conf
+      - ./data_aof:/data
+    command: >
+      redis-server /usr/local/etc/redis/redis.conf
+      
+  redis_rdb:
+    image: redis:latest
+    container_name: redis_rdb
+    
+    ports:
+      - "6378:6379"
+    volumes:
+      - ./configurations/redis_rdb.conf:/usr/local/etc/redis/redis.conf
+      - ./data_rdb:/data
+
+    command: >
+      redis-server /usr/local/etc/redis/redis.conf
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    ports:
+      - "11300:11300"
+    volumes:
+      - ./data_beanstalkd:/data
+    command: -p 11300 -b /data

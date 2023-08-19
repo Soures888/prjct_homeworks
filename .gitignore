@@ -1,2 +1,9 @@
 .idea/
 venv/
+*.code-workspace
+queue/data_aof/*
+!queue/data_aof/.gitkeep
+queue/data_rdb/*
+!queue/data_rdb/.gitkeep
+queue/data_beanstalkd/*
+!queue/data_beanstalkd/.gitkeep
