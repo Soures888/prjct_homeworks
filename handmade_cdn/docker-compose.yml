@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  bind:
+    image: ubuntu/bind9:latest
+    ports:
+      - "53:53"
+      - "53:53/udp"
+    volumes:
+      - ./configurations/bind_config/etc:/etc/named
+    environment:
+      - TZ=UTC
+      - ROOT_PASSWORD=changeme
+  loadbalancer1:
+    image: nginx:latest
+    container_name: loadbalancer1
+    ports:
+      - "82:80"
+    volumes:
+      - ./configurations/nginx-round-robin.conf:/etc/nginx/nginx.conf
+  loadbalancer2:
+    image: nginx:latest
+    container_name: loadbalancer2
+    ports:
+      - "81:80"
+    volumes:
+      - ./configurations/nginx-least-connection.conf:/etc/nginx/nginx.conf
+  node1:
+    image: nginx:latest
+    volumes:
+      - ./static:/usr/share/nginx/html
+
+  node2:
+    image: nginx:latest
+    volumes:
+      - ./static:/usr/share/nginx/html
+  node3:
+    image: nginx:latest
+    volumes:
+      - ./static:/usr/share/nginx/html
+  node4:
+    image: nginx:latest
+    volumes:
+      - ./static:/usr/share/nginx/html
+
+
+
+
