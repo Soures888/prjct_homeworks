@@ -7,3 +7,4 @@
 5. [Webserver](https://github.com/Soures888/prjct_homeworks/tree/main/webserver)
 6. [Redis Arch](https://github.com/Soures888/prjct_homeworks/tree/main/redis_arch)
 7. [Queue Comparison](https://github.com/Soures888/prjct_homeworks/tree/main/queue)
+8. [Load Balancer](https://github.com/Soures888/prjct_homeworks/tree/main/loadbalancer)

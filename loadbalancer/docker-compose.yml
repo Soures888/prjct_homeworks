@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  loadbalancer:
+    container_name: loadbalancer
+    build:
+      context: configurations
+      dockerfile: Dockerfile
+    ports:
+      - "81:80"
+    volumes:
+      - ./configurations/loadbalancer.conf:/usr/local/nginx/conf/nginx.conf
+      - ./res/GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
+  us1:
+    image: nginx:latest
+    volumes:
+      - ./static/us1:/usr/share/nginx/html
+  us2:
+    image: nginx:latest
+    volumes:
+      - ./static/us2:/usr/share/nginx/html
+  uk1:
+    image: nginx:latest
+    volumes:
+      - ./static/uk1:/usr/share/nginx/html
+  pl1:
+    image: nginx:latest
+    volumes:
+      - ./static/pl:/usr/share/nginx/html
+  backup:
+    image: nginx:latest
+    volumes:
+      - ./static/backup:/usr/share/nginx/html
+  default:
+    image: nginx:latest
+    volumes:
+      - ./static/default:/usr/share/nginx/html
